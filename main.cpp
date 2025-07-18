@@ -23,6 +23,9 @@ int main(int argc, char *argv[]) {
         return 1;
     }
     infile >> extensioncount;
+    infile >> size;
+    infile >> screenx;
+    infile >> screeny;
     if (extensioncount != 0) {
         if (extensioncount == -1) {
             std::cout << "error 0x01e" << std::endl;
@@ -44,9 +47,7 @@ int main(int argc, char *argv[]) {
         }
         
     }
-    infile >> size;
-    infile >> screenx;
-    infile >> screeny;
+
     if (round(size / 4) != size / 4) {
         std::cout << "error 0x04" << std::endl;
         std::cin >> enter;
