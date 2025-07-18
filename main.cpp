@@ -1,16 +1,48 @@
 #include <fstream>
 #include <iostream>
+#include <cmath>
 int main(int argc, char *argv[]) {
     bool quit = false;
+    int extensioncount;
+    bool extensions = false;
     int size;
     int screenx;
     int screeny;
     char enter;
+    int* extensionflag;
+    short int* extensionlength;
+    int mainline;
+    int* ext;
+    int extlength;
+    int code;
+    std::string* extensionplace;
     std::ifstream infile(argv[1]);
-    if (!infile) {
+    if (!infile.is_open()) {
         std::cout << "error 0x01" << std::endl;
         std::cin >> enter;
         return 1;
+    }
+    infile >> extensioncount;
+    if (extensioncount != 0) {
+        if (extensioncount = -1) {
+            std::cout << "error 0x01e" << std::endl;
+            return -1;
+        }
+        extensions = true;
+        extensionflag = new int[extensioncount];
+        extensionlength = new short int[extensioncount];
+        for (int i = 0; i < extensioncount; i++) {
+            extensionplace = new std::string[i];
+            infile >> extensionflag[i];
+            int* extensionchar = new int[extensionlength[i]];
+            for (int j = 0; j < extensionlength[i]; j++) {
+                infile >> extensionchar[i];
+                extensionplace[i][j] = static_cast<char>(extensionchar[i]);
+            }
+            delete[] extensionchar;
+
+        }
+        
     }
     infile >> size;
     infile >> screenx;
@@ -31,7 +63,54 @@ int main(int argc, char *argv[]) {
     }
     while(!quit) {
         for (int j = 3; j < size / 4 - 1; j = j + 2) {
-            if (arr[j] < size / 4 - 1) {
+            if (extensions) {
+                for (int k = 0; k < extensioncount; k++) {
+                    if (arr[j] == extensionflag[k]) {
+                        mainline = j;
+                        std::ifstream extensionfile(extensionplace[k]);
+                        if (!extensionfile.is_open()) {
+                            std::cout << "error 0x02e" << std::endl;
+                            return -2;
+                        }
+                        extensionfile >> code;
+                        if (code != -1) {
+                            std::cout << "error 0x01e" << std::endl;
+                            return -1;
+                        }
+                        extensionfile >> extlength;
+                        if (round(extlength / 4) != extlength / 4) {
+                            std::cout << "error 0x04e" << std::endl;
+                            return -4;
+                        }
+                        ext = new int[extlength];
+                        for (int c = 0; c < extlength; c++) {
+                            extensionfile >> ext[c];
+                        }
+                        for (int z = 0; z < extlength; z += 2) {
+                            if (ext[z] < extlength / 4 - 1) {
+                                if (ext[z + 1] > extlength) {
+                                    std::cout << "error 0x03e" << std::endl;
+                                    return -3;
+                                }
+                                ext[ext[z]] = ext[z + 1];
+                            }
+                            else if (ext[z] == extlength / 4) {
+                                if (ext[z + 1] > extlength) {
+                                    std::cout << "error 0x03e" << std::endl;
+                                    return -3;
+                                }
+                                z = ext[z + 1] - 2;
+                            }
+                            else {
+                                arr[ext[z] - extlength] = ext[z + 1];
+                            }
+                        }
+
+                    }
+                }
+            }
+            
+            else if (arr[j] < size / 4 - 1) {
                 if (arr[j + 1] > size) {
                     std::cout << "error 0x03" << std::endl;
                     std::cin >> enter;
@@ -72,6 +151,8 @@ int main(int argc, char *argv[]) {
         std::cin >> arr[0];
     }
     delete[] arr;
+    delete[] extensionflag;
+    delete[] extensionlength;
     std::cin >> enter;
     return (0);
 }
