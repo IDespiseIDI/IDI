@@ -22,8 +22,8 @@ int main(int argc, char *argv[]) {
         std::cin >> enter;
         return 1;
     }
-    infile >> extensioncount;
     infile >> size;
+    infile >> extensioncount;
     infile >> screenx;
     infile >> screeny;
     if (extensioncount != 0) {
