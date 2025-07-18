@@ -24,7 +24,7 @@ int main(int argc, char *argv[]) {
     }
     infile >> extensioncount;
     if (extensioncount != 0) {
-        if (extensioncount = -1) {
+        if (extensioncount == -1) {
             std::cout << "error 0x01e" << std::endl;
             return -1;
         }
