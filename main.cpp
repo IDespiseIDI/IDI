@@ -22,8 +22,8 @@ int main(int argc, char *argv[]) {
         std::cin >> enter;
         return 1;
     }
-    infile >> size;
     infile >> extensioncount;
+    infile >> size;
     infile >> screenx;
     infile >> screeny;
     if (extensioncount != 0) {
@@ -37,6 +37,7 @@ int main(int argc, char *argv[]) {
         for (int i = 0; i < extensioncount; i++) {
             extensionplace = new std::string[i];
             infile >> extensionflag[i];
+            infile >> extensionlength[i];
             int* extensionchar = new int[extensionlength[i]];
             for (int j = 0; j < extensionlength[i]; j++) {
                 infile >> extensionchar[i];
