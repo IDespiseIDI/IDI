@@ -1,6 +1,7 @@
 #include <fstream>
 #include <iostream>
 #include <cmath>
+#include <cstdlib>
 int main(int argc, char *argv[]) {
     bool quit = false;
     int extensioncount;
@@ -16,6 +17,23 @@ int main(int argc, char *argv[]) {
     int extlength;
     int code;
     std::string* extensionplace;
+    #if defined(_WIN32) || defined(_WIN64)
+    std::ifstream checkfile("C:/Program Files/java/jdk-24/bin/javaw.exe");
+    if (!checkfile.is_open()) {
+        std::cout << "error 0x10" << std::endl;
+        std::cin >> enter;
+        return 10;
+    }
+    checkfile.close();
+    #else
+    std::ifstream checkfile("/usr/bin/java");
+    if (!checkfile.is_open()) {
+        std::cout << "error 0x10" << std::endl;
+        std::cin >> enter;
+        return 10;
+    }
+    checkfile.close();
+    #endif
     std::ifstream infile(argv[1]);
     if (!infile.is_open()) {
         std::cout << "error 0x01" << std::endl;
