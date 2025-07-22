@@ -26,7 +26,7 @@ int main(int argc, char *argv[]) {
     }
     checkfile.close();
     #else
-    std::ifstream checkfile("/usr/bin/java");
+    std::ifstream checkfile("/bin/java");
     if (!checkfile.is_open()) {
         std::cout << "error 0x10" << std::endl;
         std::cin >> enter;
