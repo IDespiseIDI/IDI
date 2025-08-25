@@ -21,7 +21,11 @@ int main(int argc, char *argv[]) {
     int code;
     std::string vstring;
     std::string* extensionplace;
+    #ifdef _WIN32
     int check = std::system("java -version >nul 2>&1");
+#else
+    int check = std::system("java -version >/dev/null 2>&1");
+#endif
     if (check != 0) {
         std::cout << "error 0x10" << std::endl;
         std::cin >> enter;
