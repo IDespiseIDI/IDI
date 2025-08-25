@@ -21,30 +21,11 @@ int main(int argc, char *argv[]) {
     int code;
     std::string vstring;
     std::string* extensionplace;
-    #if defined(_WIN32) || defined(_WIN64)
-    std::ifstream checkfile("C:/Program Files/java/jdk-24/bin/javaw.exe");
-    if (!checkfile.is_open()) {
+    int check = std::system("java -version >nul 2>&1")
+    if (check != 0) {
         std::cout << "error 0x10" << std::endl;
         std::cin >> enter;
         return 10;
-    }
-    checkfile.close();
-    #else
-    std::ifstream checkfile("~/../usr/bin/java");
-    if (!checkfile.is_open()) {
-        std::cout << "error 0x10" << std::endl;
-        std::cin >> enter;
-        return 10;
-    }
-    checkfile.close();
-    #endif
-    if (argc == 0) {
-        std::cout << "error 0x00" << std::endl;
-        std::cin >> enter;
-        return 0;
-    }
-    if (argc > 1) {
-        rta = argc - 1;
     }
     std::ifstream infile(argv[1]);
     if (!infile.is_open()) {
