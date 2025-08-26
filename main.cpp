@@ -22,15 +22,18 @@ int main(int argc, char *argv[]) {
     std::string vstring;
     std::string* extensionplace;
     #ifdef _WIN32
-    int check = std::system("java -version >nul 2>&1");
-#else
-    int check = std::system("java -version >/dev/null 2>&1");
-#endif
-    if (check != 0) {
+    std::ifstream checkfile("C:/Program Files/Java/jdk-24/bin/java.exe");
+    #elif defined(__ANDROID__) 
+    std::ifstream checkfile("/data/data/com.termux/files/usr/bin/java");
+    #else
+    std::ifstream checkfile("/bin/java");
+    #endif
+    if (!checkfile.is_open()) {
         std::cout << "error 0x10" << std::endl;
         std::cin >> enter;
         return 10;
     }
+    checkfile.close();
     std::ifstream infile(argv[1]);
     if (!infile.is_open()) {
         std::cout << "error 0x01" << std::endl;
