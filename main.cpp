@@ -24,7 +24,7 @@ int main(int argc, char *argv[]) {
     #ifdef _WIN32
     std::ifstream checkfile("C:/Program Files/Java/jdk-24/bin/java.exe");
     #elif defined(__ANDROID__) 
-    std::ifstream checkfile("/data/data/com.termux/files/usr/bin/java");
+    std::ifstream checkfile("/data/data/com.termux/files/usr/lib/jvm/java-21-openjdk/bin/java");
     #else
     std::ifstream checkfile("/bin/java");
     #endif
